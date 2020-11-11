@@ -36,7 +36,7 @@
                                             <label class="small mb-1">Correo</label>
                                             <input class="form-control py-4 @error('email') is-invalid @enderror"
                                                 value="{{ old('email') }}" name="email" type="email"
-                                                placeholder="Ingrese su Coreo" required>
+                                                placeholder="Ingrese su Correo" required>
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
