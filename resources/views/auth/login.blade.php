@@ -76,7 +76,7 @@
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <div class="small"><a href="auth-register-basic.html">Necesitas una cuenta?
+                                    <div class="small"><a href="{{route('register')}}">Necesitas una cuenta?
                                             Registrate!</a></div>
                                 </div>
                             </div>
