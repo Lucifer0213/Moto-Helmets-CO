@@ -1,4 +1,4 @@
-P<!-- Header-->
+<!-- Header-->
   <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
   <header class="site-header navbar-sticky">
     <!-- Topbar-->
@@ -139,7 +139,7 @@ P<!-- Header-->
           </div>
         </div>
         <div class="toolbar-item hidden-on-mobile">
-          <a href="login.html">
+          <a href="{{route('login')}}">
             <div>
               <i class="icon-user"></i>
               <span class="text-label">Iniciar Sesion</span>
@@ -317,7 +317,7 @@ P<!-- Header-->
             </div>
           </div>
           <div class="toolbar-item hidden-on-mobile">
-            <a href="{{ route('login') }}">
+            <a href="{{route('login')}}">
               <div>
                 <i class="icon-user"></i>
                 <span class="text-label">Iniciar Sesion</span>
@@ -327,4 +327,4 @@ P<!-- Header-->
         </div>
       </div>
     </div>
-  </header>P
+  </header>
