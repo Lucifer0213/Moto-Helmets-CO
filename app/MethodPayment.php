@@ -13,4 +13,10 @@ class MethodPayment extends Model
     protected $guarded = ['id'];    
     protected $dates = ['deleted_at'];
     protected $hidden = ['created_at','updated_at'];
+
+    //relacion muchos a muchos entre methodpayment->order
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order');
+    }
 }

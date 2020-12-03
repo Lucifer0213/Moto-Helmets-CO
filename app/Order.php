@@ -23,4 +23,9 @@ class Order extends Model
      {
          return $this->belongsToMany('App\Product');
      }
+     //relacion muchos a muchos entre order->methodpayment
+     public function methodpayments()
+     {
+         return $this->belongsToMany('App\MethodPayment');
+     }
 }

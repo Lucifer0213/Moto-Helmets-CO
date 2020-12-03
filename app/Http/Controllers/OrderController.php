@@ -66,9 +66,9 @@ class OrderController extends Controller
         try{
             // dd($arrProducts[0]['quantity_to_buy'], $arrProducts[0]);
             foreach($arrProducts as $product)
-                $order->products()->attach($product['id'],['price' => $price, 'quantity' => $arrProducts[0]['quantity_to_buy']]);
+                $order->products()->attach($product['id'],['price' => $price, 'quantity' => $product['quantity_to_buy']]);
             
-            return true; //Listo juli necesitas cambiar los nombres como te dije y sale
+            return true;
         }catch(\Exception $e){
             $resp = [
                 'error' => true,

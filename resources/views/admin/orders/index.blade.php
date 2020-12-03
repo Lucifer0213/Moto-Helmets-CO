@@ -44,7 +44,11 @@
                         <td>{{$order->total}}</td>
                         <td>{{$order->observations}}</td>
                         <td>{{$order->person->name}}</td>
-                        <td>{{$order->product_id}}</td>
+                        <td>
+                            @foreach($order->products as $product)
+                            <div>{{ $product->name }}</div>
+                             @endforeach
+                            </td>
                         <td>{{$order->status}}</td>
                         <td>
                             <div class="row">

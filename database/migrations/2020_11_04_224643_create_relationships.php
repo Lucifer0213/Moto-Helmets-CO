@@ -35,7 +35,7 @@ class CreateRelationships extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
         });
 
-        Schema::table('detail_payment', function ($table)
+        Schema::table('methodpayment_order', function ($table)
         {
             $table->foreign('method_payment_id')->references('id')->on('method_payments')->onUpdate('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');

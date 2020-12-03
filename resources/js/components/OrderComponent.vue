@@ -5,11 +5,7 @@
       <div class="card-body">
         <div class="form-group">
           <label>Fecha Orden</label>
-          <input
-            type="date"
-            name="dateOrder"
-            class="form-control"
-            required
+          <input type="date" name="dateOrder" class="form-control" required
             v-model="dateOrder"
           />
         </div>
@@ -49,7 +45,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Precio</label>
           <input
             type="number"
@@ -58,27 +54,27 @@
             required
             v-model="price"
           />
-        </div>
+        </div> -->
 
-        <div class="form-group row">
-          <div class="col-md-10">
-            <label>Productos</label>
-            <select
-              v-model="productSelected"
-              class="form-control"
-              @change="addProduct()"
-            >
-              <option value="">Seleccione...</option>
-              <option v-for="(product, index) in products" :value="product">
-                {{ product.name }}
-              </option>
-            </select>
+          <div class="form-group row">
+            <div class="col-md-10">
+              <label>Productos</label>
+              <select
+                v-model="productSelected"
+                class="form-control"
+                @change="addProduct()"
+              >
+                <option value="">Seleccione...</option>
+                <option v-for="(product, index) in products" :value="product">
+                  {{ product.name }}
+                </option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-group row justify-content-center">
-          <table
-            class="table table-responsive table-light col-6 col-sm-12 col-md-8 col-lg-6 justify-content-center"
-          >
+          <div class="form-group row justify-content-center">
+            <table
+              class="table table-responsive table-light col-6 col-sm-12 col-md-8 col-lg-6 justify-content-center"
+            >
             <!-- <div class="col-md-12 mt-2"> -->
             <thead>
               <tr>
@@ -149,7 +145,7 @@ export default {
       total: "",
       observations: "",
       personSelected: "",
-      price: "",
+      // price: "",
       productSelected: "",
       // quantities: [],
       // flag: false,
