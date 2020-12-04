@@ -31,10 +31,11 @@
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{session('info')}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&#8595;</span>
                         </button>
                     </div>
-                @endif
+
+@endif
                 @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show">
                         <ul>
@@ -46,7 +47,7 @@
                             </button>
                         </ul>
                     </div>
-                @endif
+@endif
                 <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
                     <div class="container">
                         <div class="page-header-content pt-4">
@@ -59,17 +60,17 @@
                                 <div class="pt-3">
                                     @yield('create')
                                 </div>
-                                
+
                             </div>
                                     <ol class="breadcrumb mb-0 mt-4">
-                                        <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{route('home')}}">Bienvenido</a></li>
                                         {{-- <li class="breadcrumb-item active">Breadcrumbs</li> --}}
                                         @yield('breadcrumb')
                                     </ol>
                         </div>
                     </div>
                 </header>
-                
+
                 @yield('content')
             </main>
             @include('layouts.admin.admin_footer')
@@ -88,7 +89,7 @@
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
     <script src="{{ url('assets\admin\demo\date-range-picker-demo.js') }}"></script>
-    
+
 
 </body>
 
