@@ -9,14 +9,13 @@ class MethodPayment extends Model
 {
     use SoftDeletes;
     protected $table = 'method_payments';
-    protected $fillable = ['name','status'];
+    protected $fillable = ['tipopago','status','consignment_number'];
     protected $guarded = ['id'];    
     protected $dates = ['deleted_at'];
     protected $hidden = ['created_at','updated_at'];
 
-    //relacion muchos a muchos entre methodpayment->order
-    public function orders()
+    public function order()
     {
-        return $this->belongsToMany('App\Order');
+        return $this->hasMany('App\Order');
     }
 }

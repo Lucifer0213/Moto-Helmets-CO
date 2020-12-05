@@ -5,5 +5,5 @@
 <li class="breadcrumb-item active">Registro de Orden</li>
 @endsection
 @section('content')
-        <order url="{{ $url }}" :persons="{{ $persons}}" :products="{{$products}}"></order>
+        <order url="{{ $url }}" :persons="{{ $persons}}" :products="{{$products}}" :methodpayments="{{$methodpayments}}"></order>
 @endsection

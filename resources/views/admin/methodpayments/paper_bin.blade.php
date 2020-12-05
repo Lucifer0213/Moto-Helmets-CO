@@ -14,6 +14,7 @@
                     <tr>
                         <th scope="row">Id</th>
                         <th>Nombre</th>
+                        <th>Numero de consignación</th>
                         <th>Estado</th>
                         <th>Aciones</th>
                     </tr>
@@ -34,7 +35,8 @@
                     @foreach ($methodpayments as $methodpayment)
                     <tr>
                         <td scope="row">{{$methodpayment->id}}</td>
-                        <td>{{$methodpayment->name}}</td>
+                        <td>{{$methodpayment->tipopago}}</td>
+                        <td>{{$methodpayment->consignment_number}}</td>
                         <td>{{$methodpayment->status}}</td>
                         <td>
                             <div class="row">

@@ -25,7 +25,7 @@ class Product extends Model
     }
     public function promotions()
     {
-        return $this->hasMany('App\promotions');
+        return $this->hasMany('App\Promotion');
     }
      //relacion muchos a muchos entre order->product
      public function orders()

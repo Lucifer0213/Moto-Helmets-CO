@@ -16,6 +16,7 @@
                     <tr>
                         <th scope="row">Id</th>
                         <th>Nombre</th>
+                        <th>Numero de consignación</th>
                         <th>Estado</th>
                         <th>Aciones</th>
                     </tr>
@@ -36,20 +37,14 @@
                     @foreach ($methodpayments as $methodpayment)
                     <tr>
                         <td scope="row">{{$methodpayment->id}}</td>
-                        <td>{{$methodpayment->name}}</td>
+                        <td>{{$methodpayment->tipopago}}</td>
+                        <td>{{$methodpayment->consignment_number}}</td>
                         <td>{{$methodpayment->status}}</td>
                         <td>
-                            <div class="row">
-                                <a class="btn btn-primary  mr-2"
-                                    href="{{route('methodpayments.edit', ['methodpayment' => $methodpayment->id])}}" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
                                 <a class="btn btn-danger" href="{{route('methodpayments/destroy', ['id' => $methodpayment->id])}}"
                                     title="Mover a la Papelera" onclick="return confirm('Esta seguro de mover este metodo de pago a la papelera')">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-
-                            </div>
                         </td>
                     </tr>
                     @endforeach

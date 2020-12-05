@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Person;
 use App\Product;
+use App\MethodPayment;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -18,14 +19,15 @@ class OrderController extends Controller
         $products = Product::all();
         $statuses = getStatusOrdersArray();
         $persons=Person::all();
+        $methodpayments= MethodPayment::all();
         $url= config('app.url').'admin/orders';
-        return \View::make('admin/orders/create', compact('statuses','persons','products','url'));
+        return \View::make('admin/orders/create', compact('statuses','persons','products','methodpayments','url'));
 
     }
 
     public function store(Request $request)
     {
-        $order = $this->saveOrder($request);
+        $order = $this->saveOrder($request, $request->arrProducts);
         $productOrder = $this->saveProductOrder($order, $request->arrProducts, $request->price); 
         if(!isset($order['error']) && !isset($productOrder['error']) ){
             $resp = [
@@ -42,15 +44,24 @@ class OrderController extends Controller
         }    
     }
 
-    public function saveOrder($request)
+    public function saveOrder($request, $arrQuantityPrice)
     { 
         try{
+            // dd($arrQuantityPrice);
+            $totalCompra = 0;
+
+            foreach ($arrQuantityPrice as $quantityXPrice) {
+                $totalCompra += ($quantityXPrice['price'] * $quantityXPrice['quantity_to_buy']);
+            }
+
             $order = new Order;
             $order->dateOrder = $request->dateOrder;
-            $order->total = $request->total;
+            $order->total = $totalCompra;
             $order->observations = $request->observations;
             $order->person_id = $request->person_id;
+            $order->method_id = $request->method_id;
             $order->status = "Activo";
+            
             $order->save();
             return $order;
         }catch(\Exception $e){
@@ -65,8 +76,10 @@ class OrderController extends Controller
     {
         try{
             // dd($arrProducts[0]['quantity_to_buy'], $arrProducts[0]);
-            foreach($arrProducts as $product)
-                $order->products()->attach($product['id'],['price' => $price, 'quantity' => $product['quantity_to_buy']]);
+            foreach($arrProducts as $product){
+
+                $order->products()->attach($product['id'],['price' => $product['price'], 'quantity' => $product['quantity_to_buy']]);
+            }
             
             return true;
         }catch(\Exception $e){
@@ -83,7 +96,8 @@ class OrderController extends Controller
     	$order = Order::find($id);
         $statuses = getStatusOrdersArray(); 
         $persons = Person::all(); 	
-        return \View::make('admin/orders/edit', compact('order','statuses','persons'));
+        $methodpayments = MethodPayment::all(); 	
+        return \View::make('admin/orders/edit', compact('order','statuses','persons','methodpayments'));
     }
     public function update($id, Request $request)
     {
@@ -93,6 +107,7 @@ class OrderController extends Controller
             'total' => 'required|numeric',
             'observations' => 'required',
             'person_id' => 'required',
+            'method_id' => 'required',
             'status' => 'required'
         ]);
     	$order = Order::find($id);
@@ -100,6 +115,7 @@ class OrderController extends Controller
         $order->total = $request->total;
         $order->observations = $request->observations;
         $order->person_id = $request->person_id;
+        $order->method_id = $request->method_id;
     	$order->status = $request->status;
         $order->save();
         $order->products()->detach($product['id']);

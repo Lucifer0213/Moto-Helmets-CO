@@ -19,6 +19,7 @@
                         <th>Total</th>
                         <th>observaciones</th>
                         <th>Cliente</th>
+                        <th>Metodo de pago</th>
                         <th>Productos</th>
                         <th>Estado</th>
                         <th>Aciones</th>
@@ -44,6 +45,7 @@
                         <td>{{$order->total}}</td>
                         <td>{{$order->observations}}</td>
                         <td>{{$order->person->name}}</td>
+                        <td>{{$order->method_id}}</td>
                         <td>
                             @foreach($order->products as $product)
                             <div>{{ $product->name }}</div>
@@ -51,17 +53,10 @@
                             </td>
                         <td>{{$order->status}}</td>
                         <td>
-                            <div class="row">
-                                <a class="btn btn-primary ml-3 mr-2"
-                                    href="{{route('orders.edit', ['order' => $order->id])}}" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
                                 <a class="btn btn-danger" href="{{route('orders/destroy', ['id' => $order->id])}}"
                                     title="Mover a la Papelera" onclick="return confirm('Esta seguro de mover esta Orden a la papelera')">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-
-                            </div>
                         </td>
                     </tr>
                     @endforeach

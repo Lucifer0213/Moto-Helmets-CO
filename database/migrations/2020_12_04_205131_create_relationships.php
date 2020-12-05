@@ -35,14 +35,9 @@ class CreateRelationships extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
         });
 
-        Schema::table('methodpayment_order', function ($table)
-        {
-            $table->foreign('method_payment_id')->references('id')->on('method_payments')->onUpdate('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade');
-        });
-
         Schema::table('orders', function ($table)
         {
+            $table->foreign('method_id')->references('id')->on('method_payments')->onUpdate('cascade');
             $table->foreign('person_id')->references('id')->on('persons')->onUpdate('cascade');
         });
 
@@ -66,16 +61,3 @@ class CreateRelationships extends Migration
         Schema::dropIfExists('relationships');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

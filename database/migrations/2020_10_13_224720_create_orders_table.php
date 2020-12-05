@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total');
             $table->string('observations')->nullable();
             $table->integer('person_id')->unsigned();
+            $table->integer('method_id')->unsigned();
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

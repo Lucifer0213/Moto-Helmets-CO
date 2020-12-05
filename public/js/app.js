@@ -1899,150 +1899,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    var _ref;
-
-    return _ref = {
-      name: "",
-      status: "",
-      consignment_number: "",
-      orderSelected: ""
-    }, _defineProperty(_ref, "status", ""), _defineProperty(_ref, "arrOrders", []), _defineProperty(_ref, "showError", false), _ref;
-  },
-  props: {
-    url: {
-      type: String,
-      "default": ""
-    },
-    orders: {
-      type: Array,
-      "default": []
-    }
-  },
-  methods: {
-    addOrder: function addOrder() {
-      if (this.orderSelected !== "") {
-        if (typeof this.existOrder(this.orderSelected.id) === "undefined") {
-          this.arrOrders.push(this.orderSelected);
-          this.orderSelected = "";
-        } else {
-          alert("Esta Orden Ya se encuentra seleccionada");
-        }
-      } else {
-        alert("Debe seleccionar minimo una orden");
-      }
-    },
-    existOrder: function existOrder(orderId) {
-      var existOrder = this.arrOrders.find(function (order) {
-        return order.id === orderId;
-      });
-      return existOrder;
-    },
-    removeOrder: function removeOrder(index) {
-      this.arrOrders.splice(index, 1);
-    },
-    submitForm: function submitForm() {
-      var _this = this;
-
-      if (this.name != "" && this.status != "" && this.consignment_number != "" && this.status != "" && this.arrOrders.length > 0) {
-        var data = {
-          name: this.name,
-          status: this.status,
-          consignment_number: this.consignment_number,
-          arrOrders: this.arrOrders
-        };
-        axios.post(this.url, data).then(function (response) {
-          if (response.data.success === true) {
-            alert(response.data.message);
-            location.href = _this.url;
-          } else alert(response.data.message);
-        })["catch"](function (error) {
-          console.log(error);
-          alert("Error Insertando el metodo de pago");
-        });
-      } else {
-        this.showError = true;
-      }
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrderComponent.vue?vue&type=script&lang=js& ***!
@@ -2188,16 +2044,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dateOrder: "",
-      total: "",
+      // total: "",
       observations: "",
       personSelected: "",
+      methodSelected: "",
       // price: "",
       productSelected: "",
       // quantities: [],
@@ -2218,41 +2072,23 @@ __webpack_require__.r(__webpack_exports__);
     products: {
       type: Array,
       "default": []
+    },
+    methodpayments: {
+      type: Array,
+      "default": []
     }
   },
   methods: {
     addProduct: function addProduct() {
-      // Cantidad input field unique value
       console.log(this.arrProducts[0]);
 
       if (this.flag == true) {
         this.arrProducts.push({
           quantity_to_buy: ""
-        }); // this.quantities.push(this.arrProducts)
-      } // console.log(this.quantities);
-      // this.flag = true;
-
-
-      console.log(this.arrProducts);
-      console.log(this.arrProducts[0]); // let quantities = [];
-      // this.quantities.push({ value: "" });
-      // console.log(this.quantities);
-      // if(this.flag != true)
-      // this.arrProducts.push(this.quantities);
-      // this.flag = true;
-      // for (let i = 0; i < this.arrProducts.length; i++) {
-      //   console.log(this.arrProducts[i]);
-      //   console.log(this.arrProducts[i][0]);
-      //   console.log(this.arrProducts[i].value);
-      // }
-      // // console.log(this.arrProducts);
-      // console.log(`PRUEBA: ` + this.arrProducts[0]);
-      // console.log(`PRUEBA: ` + this.arrProducts[0][0]);
-      // console.log(`PRUEBA: ` + this.arrProducts[0].value);
-      // console.log(this.arrProducts[0][0]);
-      // console.log(this.arrProducts[0][value]);
-      // console.log(this.arrProducts[quantities]);
-      // console.log(this.arrProducts.quantities);
+        }, {
+          price: ""
+        });
+      }
 
       if (this.productSelected !== "") {
         if (typeof this.existProduct(this.productSelected.id) === "undefined") {
@@ -2277,24 +2113,13 @@ __webpack_require__.r(__webpack_exports__);
     submitForm: function submitForm() {
       var _this = this;
 
-      // let arrQuantities = "";
-      // for (let i = 0; i < this.arrProducts.length; i++) {
-      //   document.querySelectorAll(".quantity").forEach((p, i) => {
-      //     this.arrProducts['quantities'] = p.value;
-      //     // console.log(p[i].value);
-      //     // arrQuantities.push(p[i].value);
-      //   });
-      // // }
-      // // console.log(arrQuantities);
-      // console.log(this.arrProducts);
-      // console.log(document.querySelectorAll('quantity'));
-      if (this.personSelected != "" && this.dateOrder != "" && this.total != "" && this.observations != "" && this.price != "" && this.quantity != "" && this.arrProducts.length > 0) {
+      if (this.personSelected != "" && this.methodSelected != "" && this.dateOrder != "" && this.total != "" && this.observations != "" && this.arrProducts.length > 0) {
         var data = {
           dateOrder: this.dateOrder,
           total: this.total,
           observations: this.observations,
           person_id: this.personSelected,
-          price: this.price,
+          method_id: this.methodSelected,
           quantity: this.quantity,
           arrProducts: this.arrProducts
         };
@@ -37892,233 +37717,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a& ***!
-  \*************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-n10" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "form-group col-md-6" }, [
-            _c("label", [_vm._v("Nombre")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", name: "name", required: "" },
-              domProps: { value: _vm.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.name = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.showError === true
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "alert alert-danger",
-                    attrs: { role: "alert" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                         El atributo es requerido\n                         "
-                    )
-                  ]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Numero de envio")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.consignment_number,
-                  expression: "consignment_number"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "number",
-                name: "consignment_number",
-                required: ""
-              },
-              domProps: { value: _vm.consignment_number },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.consignment_number = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-md-10" }, [
-              _c("label", [_vm._v("Fecha de la Orden")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.orderSelected,
-                      expression: "orderSelected"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.orderSelected = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.addOrder()
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("Seleccione...")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.orders, function(order, index) {
-                    return _c("option", { domProps: { value: order } }, [
-                      _vm._v(
-                        "\n                             " +
-                          _vm._s(order.dateOrder) +
-                          "\n                             "
-                      )
-                    ])
-                  })
-                ],
-                2
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Statuso")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.status,
-                  expression: "status"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", name: "status", required: "" },
-              domProps: { value: _vm.status },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.status = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group row" },
-            _vm._l(_vm.arrOrders, function(order, index) {
-              return _c("div", { staticClass: "col-md-6 text-center row" }, [
-                _c("div", { staticClass: "col-md-8 mt-2" }, [
-                  _c("span", [_vm._v(_vm._s(order.dateOrder))])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-4 mt-2" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          return _vm.removeOrder(index)
-                        }
-                      }
-                    },
-                    [_vm._v("-")]
-                  )
-                ])
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex justify-content-center" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary float-right mt-5",
-                on: {
-                  click: function($event) {
-                    return _vm.submitForm()
-                  }
-                }
-              },
-              [_vm._v("Guardar")]
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderComponent.vue?vue&type=template&id=082b38fa&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrderComponent.vue?vue&type=template&id=082b38fa& ***!
@@ -38172,32 +37770,6 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Total")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.total,
-                expression: "total"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", name: "total", required: "" },
-            domProps: { value: _vm.total },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.total = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
           _c("label", [_vm._v("Observaciones")]),
           _vm._v(" "),
           _c("input", {
@@ -38221,6 +37793,56 @@ var render = function() {
               }
             }
           })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("Metodo de pago")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.methodSelected,
+                  expression: "methodSelected"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.methodSelected = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [
+                _vm._v("Seleccione....")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.methodpayments, function(methodpayment, index) {
+                return _c("option", { domProps: { value: methodpayment.id } }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(methodpayment.tipopago) +
+                      "\n          "
+                  )
+                ])
+              })
+            ],
+            2
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
@@ -38333,7 +37955,7 @@ var render = function() {
             "table",
             {
               staticClass:
-                "table table-responsive table-light col-6 col-sm-12 col-md-8 col-lg-6 justify-content-center"
+                "table table-responsive table-light col-md-12 justify-content-center"
             },
             [
               _vm._m(0),
@@ -38360,9 +37982,9 @@ var render = function() {
                         ],
                         staticClass: "form-control quantity",
                         attrs: {
-                          type: "text",
+                          type: "number",
                           required: "",
-                          placeholder: "Ingrese cantidad"
+                          placeholder: "0"
                         },
                         domProps: { value: product.quantity_to_buy },
                         on: {
@@ -38380,7 +38002,35 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("$" + _vm._s(product.price))]),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: product.price,
+                            expression: "product.price"
+                          }
+                        ],
+                        staticClass: "timePunch timefield timeIn",
+                        attrs: {
+                          type: "text",
+                          name: "timePunchIn",
+                          id: "timePunchIn",
+                          value: "${iteration.startTime}",
+                          readonly: "readonly"
+                        },
+                        domProps: { value: product.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(product, "price", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c("div", { staticClass: "col-md-4 mt-2" }, [
@@ -50646,7 +50296,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('order', __webpack_require__(/*! ./components/OrderComponent.vue */ "./resources/js/components/OrderComponent.vue")["default"]);
-Vue.component('methodpayment', __webpack_require__(/*! ./components/MethodPaymentComponent.vue */ "./resources/js/components/MethodPaymentComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50701,75 +50350,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/components/MethodPaymentComponent.vue":
-/*!************************************************************!*\
-  !*** ./resources/js/components/MethodPaymentComponent.vue ***!
-  \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MethodPaymentComponent.vue?vue&type=template&id=50177e7a& */ "./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a&");
-/* harmony import */ var _MethodPaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MethodPaymentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _MethodPaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/MethodPaymentComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MethodPaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MethodPaymentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MethodPaymentComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MethodPaymentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a& ***!
-  \*******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./MethodPaymentComponent.vue?vue&type=template&id=50177e7a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MethodPaymentComponent.vue?vue&type=template&id=50177e7a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MethodPaymentComponent_vue_vue_type_template_id_50177e7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
 
 /***/ }),
 

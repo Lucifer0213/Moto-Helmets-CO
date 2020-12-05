@@ -20,6 +20,7 @@ class OrdersTableSeeder extends Seeder
         	$order->total = $faker->numberBetween($min = 10000, $max = 100000);
         	$order->observations = $faker->realtext(rand(50,100));
             $order->person_id = $faker->numberBetween($min = 1, $max = 3);
+            $order->method_id = 1;
             $order->status = 'En progroceso';
             $order->save();
         }

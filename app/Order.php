@@ -9,7 +9,7 @@ class Order extends Model
 {
     use SoftDeletes;
     protected $table = 'orders';
-    protected $fillable = ['dateOrder','total','oservations','person_id','status'];
+    protected $fillable = ['dateOrder','total','oservations','person_id','method_id','status'];
     protected $guarded = ['id'];    
     protected $dates = ['deleted_at'];
     protected $hidden = ['created_at','updated_at'];
@@ -23,9 +23,11 @@ class Order extends Model
      {
          return $this->belongsToMany('App\Product');
      }
-     //relacion muchos a muchos entre order->methodpayment
      public function methodpayments()
      {
-         return $this->belongsToMany('App\MethodPayment');
+         return $this->belongsTo('App\MethodPayment');
      }
+
+   
+
 }

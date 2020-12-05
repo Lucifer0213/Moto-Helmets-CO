@@ -12,16 +12,17 @@ class MethodPaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        $brands = array(
-        	['name' => 'Efectivo'],
-        	['name' => 'Targeta'],
+        $methodpayments = array(
+        	['tipopago' => 'Efectivo'],
+        	['tipopago' => 'Tarjeta'],
 
         );
-        foreach ($brands as $value) {
-        	$brands = new MethodPayment;
-        	$brands->name = $value['name'];
-        	$brands->status = 'Activo';
-        	$brands->save();
+        foreach ($methodpayments as $value) {
+        	$methodpayments = new MethodPayment;
+        	$methodpayments->tipopago = $value['tipopago'];
+            $methodpayments->status = 'Activo';
+            $methodpayments->consignment_number = '12255';
+        	$methodpayments->save();
         }
     }
 }

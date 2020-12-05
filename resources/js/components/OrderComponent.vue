@@ -13,7 +13,7 @@
           El atributo es requerido
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Total</label>
           <input
             type="number"
@@ -22,7 +22,7 @@
             required
             v-model="total"
           />
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label>Observaciones</label>
@@ -34,6 +34,15 @@
             v-model="observations"
           />
         </div>
+        <div class="form-group">
+          <label>Metodo de pago</label>
+          <select v-model="methodSelected" class="form-control">
+            <option value="">Seleccione....</option>
+            <option v-for="(methodpayment, index) in methodpayments" :value="methodpayment.id">
+              {{ methodpayment.tipopago }}
+            </option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label>Cliente</label>
@@ -44,18 +53,6 @@
             </option>
           </select>
         </div>
-
-        <!-- <div class="form-group">
-          <label>Precio</label>
-          <input
-            type="number"
-            name="price"
-            class="form-control"
-            required
-            v-model="price"
-          />
-        </div> -->
-
           <div class="form-group row">
             <div class="col-md-10">
               <label>Productos</label>
@@ -73,7 +70,7 @@
           </div>
           <div class="form-group row justify-content-center">
             <table
-              class="table table-responsive table-light col-6 col-sm-12 col-md-8 col-lg-6 justify-content-center"
+              class="table table-responsive table-light col-md-12 justify-content-center"
             >
             <!-- <div class="col-md-12 mt-2"> -->
             <thead>
@@ -91,23 +88,23 @@
                 <th scope="row">{{ product.barcode }}</th>
                 <td>{{ product.name }}</td>
                 <td>
-                  <!-- Necesitamos hacer un for que no interfiera con este -->
-                  <!-- <div > -->
                   <input
                     v-model="product.quantity_to_buy"
-                    type="text"
+                    type="number"
                     class="form-control quantity"
                     required
-                    placeholder="Ingrese cantidad"
+                    placeholder="0"
                   />
-                  <!-- <input v-model="product.value" /> -->
-                  <!-- {{ (flag = true) }} -->
-                  <!-- v-for="quantity in quantities" :key="quantity.value" -->
-                  <!-- name="quantity" -->
-                  <!-- key="product.quantity" -->
-                  <!-- </div> -->
                 </td>
-                <td>${{ product.price }}</td>
+
+                <td><input type="text"
+                v-model="product.price" 
+                name="timePunchIn" 
+                class="timePunch timefield timeIn" 
+                id="timePunchIn"
+                 value="${iteration.startTime}"
+                 readonly="readonly"></td>
+
                 <td>
                   <div class="col-md-4 mt-2">
                     <button
@@ -142,9 +139,10 @@ export default {
   data: function () {
     return {
       dateOrder: "",
-      total: "",
+      // total: "",
       observations: "",
       personSelected: "",
+      methodSelected: "",
       // price: "",
       productSelected: "",
       // quantities: [],
@@ -166,41 +164,18 @@ export default {
       type: Array,
       default: [],
     },
+    methodpayments: {
+      type: Array,
+      default: [],
+    },
   },
   methods: {
     addProduct: function () {
-      // Cantidad input field unique value
+
       console.log(this.arrProducts[0]);
       if (this.flag == true) {
-        this.arrProducts.push({ quantity_to_buy: "" });
-        // this.quantities.push(this.arrProducts)
+        this.arrProducts.push({ quantity_to_buy: "" },{price: ""});
       }
-
-      // console.log(this.quantities);
-
-      // this.flag = true;
-      console.log(this.arrProducts);
-      console.log(this.arrProducts[0]); 
-      // let quantities = [];
-      // this.quantities.push({ value: "" });
-      // console.log(this.quantities);
-      // if(this.flag != true)
-      // this.arrProducts.push(this.quantities);
-      // this.flag = true;
-
-      // for (let i = 0; i < this.arrProducts.length; i++) {
-      //   console.log(this.arrProducts[i]);
-      //   console.log(this.arrProducts[i][0]);
-      //   console.log(this.arrProducts[i].value);
-      // }
-      // // console.log(this.arrProducts);
-      // console.log(`PRUEBA: ` + this.arrProducts[0]);
-      // console.log(`PRUEBA: ` + this.arrProducts[0][0]);
-      // console.log(`PRUEBA: ` + this.arrProducts[0].value);
-      // console.log(this.arrProducts[0][0]);
-      // console.log(this.arrProducts[0][value]);
-      // console.log(this.arrProducts[quantities]);
-      // console.log(this.arrProducts.quantities);
 
       if (this.productSelected !== "") {
         if (typeof this.existProduct(this.productSelected.id) === "undefined") {
@@ -223,27 +198,13 @@ export default {
       this.arrProducts.splice(index, 1);
     },
     submitForm: function () {
-      // let arrQuantities = "";
-
-      // for (let i = 0; i < this.arrProducts.length; i++) {
-      //   document.querySelectorAll(".quantity").forEach((p, i) => {
-
-      //     this.arrProducts['quantities'] = p.value;
-      //     // console.log(p[i].value);
-      //     // arrQuantities.push(p[i].value);
-      //   });
-      // // }
-      // // console.log(arrQuantities);
-      // console.log(this.arrProducts);
-      // console.log(document.querySelectorAll('quantity'));
 
       if (
         this.personSelected != "" &&
+        this.methodSelected != "" &&
         this.dateOrder != "" &&
         this.total != "" &&
         this.observations != "" &&
-        this.price != "" &&
-        this.quantity != "" &&
         this.arrProducts.length > 0
       ) {
         let data = {
@@ -251,7 +212,7 @@ export default {
           total: this.total,
           observations: this.observations,
           person_id: this.personSelected,
-          price: this.price,
+          method_id: this.methodSelected,
           quantity: this.quantity,
           arrProducts: this.arrProducts,
         };

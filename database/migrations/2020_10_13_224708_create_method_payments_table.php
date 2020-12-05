@@ -15,8 +15,9 @@ class CreateMethodPaymentsTable extends Migration
     {
         Schema::create('method_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('tipopago');
             $table->string('status');
+            $table->string('consignment_number');
             $table->softDeletes();
             $table->timestamps();
         });

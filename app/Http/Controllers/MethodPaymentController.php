@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\MethodPayment;
-use App\Order;
 use Illuminate\Http\Request;
 
 class MethodPaymentController extends Controller
@@ -15,69 +14,25 @@ class MethodPaymentController extends Controller
 
     public function create()
     {
-        $orders = Order::all();
         $statuses = getStatusMethodPaymentsArray();
-        $url=config('app.url').'admin/methodpayments';
-        return \View::make('admin/methodpayments/create', compact('statuses','orders','url'));
+        return \View::make('admin/methodpayments/create', compact('statuses'));
     }
 
     public function store(Request $request)
     {
-
-
-        $methodpayment = $this->saveMethodPayment($request); // Esta 
-        $orderMethodPayment = $this->saveOrderMethodPayment($methodpayment, $request->arrOrders, $request->consignment_number);
-        // dd($methodpayment, $request->arrOrders,  $request->consignment_number);
-        if(!isset($methodpayment['error']) && !isset($orderMethodPayment['error']) ){
-            $resp = [
-                'success' => true,
-                'message'=>'Inserción Correcta'
-            ];
-            return response()->json($resp);
-        }else{
-            $resp = [
-                'error'=>true,
-                'message'=>'Error Creando La Orden'
-            ];
-            return response()->json($resp);
-        }
+        $this->validate($request, [
+            'tipopago'      => 'required',
+            'consignment_number' => 'required|numeric',
+        ]);
+        $methodpayment = new MethodPayment;
+        $methodpayment->tipopago = $request->tipopago;
+        $methodpayment->status = $request->status;
+        $methodpayment->consignment_number = $request->consignment_number;
+        $methodpayment->save();
+        return redirect('admin/methodpayments')->with('info', 'Metodo Agregado Satisfatoriamente');
+        
     }
-
-
-    public function saveMethodPayment($request)
-    {
-        try{
-            $methodpayment = new MethodPayment;
-            $methodpayment->name = $request->name;
-            $methodpayment->status = $request->status;
-            $methodpayment->save();
-            return $methodpayment;
-        }catch(\Exception $e){
-            $request = [
-                'error' => true,
-                'message' => 'Error insertando la orden('.$e->getMessage().')'
-            ];
-            return $resp;
-        }
-    }
-    
-    public function saveOrderMethodPayment($methodpayment, $arrOrders, $consignment_number)
-    {
-        try{
-            // dd($methodpayment, $arrOrder);
-            foreach($arrOrders as $orders){
-                $methodpayment->orders()->attach($order['id'],['consignment_number'=> $consignment_number], ['value'=> $orders['total']]);
-
-            }
-            return true;
-            }catch(\Exception $e){
-                $resp = [
-                    'error' => true,
-                    'message' =>'Error Insertando el detalle de  la orden('.$e->getMessage().')'
-                ];
-                return $resp;
-            }
-    }
+  
 
     public function edit($id)
     {
@@ -89,13 +44,14 @@ class MethodPaymentController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required',
+            'tipopago'      => 'required',
             'status'     => 'required'
         ]);
         
         $methodpayment = MethodPayment::find($id);
-        $methodpayment->name = $request->name;
+        $methodpayment->tipopago = $request->tipopago;
         $methodpayment->status = $request->status;
+        $methodpayment->consignment_number = $request->consignment_number;
         $methodpayment->save();
         return redirect('admin/methodpayments')->with('info', 'Metodo de pago Actualizado Satisfatoriamente');
     }
