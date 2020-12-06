@@ -86,21 +86,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{ url('js\admin\scripts.js') }}"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{ url('assets\admin\demo\chart-area-demo.js') }}"></script>
-    <script src="{{ url('assets\admin\demo\chart-bar-demo.js') }}"></script> -->
+    <script src="{{ url('js\app.js') }}"></script>
+   
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
-<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
     <script src="{{ url('assets\admin\demo\date-range-picker-demo.js') }}"></script>
 
-=======
-
-    
->>>>>>> 7e9cd3de80f65e0ef5a493549b0fa19287e3fbbe
 
 </body>
 
